@@ -10,11 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    # 1. 升级到了 v4
-    - uses: actions/checkout@v4 
+    # 1. 升级到 v6，原生支持 Node 24 运行时
+    - uses: actions/checkout@v6 
     
-    # 2. 升级到了 v4（Java 11 依然支持）
-    - uses: actions/setup-java@v4
+    # 2. 升级到 v5，原生支持 Node 24 运行时
+    - uses: actions/setup-java@v5
       with:
         distribution: temurin
         java-version: 11
@@ -26,8 +26,8 @@ jobs:
         sed -i "s/com.game.packagename/${{ github.event.inputs.package_name }}/g" module/src/main/cpp/game.h
         ./gradlew :module:assembleRelease
         
-    # 3. 保持 v4 即可（GitHub 会自动拉取已适配 Node 24 的最新补丁）
-    - uses: actions/upload-artifact@v4
+    # 3. 升级到 v5，原生支持 Node 24 运行时
+    - uses: actions/upload-artifact@v5
       with:
         name: zygisk-il2cppdumper
         path: out/magisk_module_release/
